@@ -1,0 +1,25 @@
+invoice_scanner/
+├── main.py                  # Entry point: coordinates overall workflow.
+├── config.py                # Configuration settings (paths, thresholds, etc.).
+├── README.md                # Documentation and project overview.
+├── requirements.txt         # List of dependencies (e.g., OpenCV, Tesseract, etc.).
+│
+├── preprocessing/           # Image pre-processing module.
+│   ├── __init__.py
+│   └── image_preprocessing.py  # Functions for noise reduction, deskewing, resizing, etc.
+│
+├── ocr/                     # Optical Character Recognition (OCR) module.
+│   ├── __init__.py
+│   └── ocr_engine.py           # Integration with OCR tools (e.g., Tesseract).
+│
+├── extraction/              # Data extraction module.
+│   ├── __init__.py
+│   └── data_extractor.py       # Parses OCR results to extract key fields (date, city, invoice number, etc.).
+│
+├── classification/          # Optional: Document classification module.
+│   ├── __init__.py
+│   └── invoice_classifier.py   # Determines invoice types or validates document layouts.
+│
+└── utils/                   # Optional: utility functions and common helpers.
+    ├── __init__.py
+    └── helper_functions.py     # Logging, error handling, etc.
