@@ -100,6 +100,7 @@ pip install -r requirements.txt
 ## Usage
 
 ### Command Line
+*deprecated*
 ```sh
 python main.py --image path/to/invoice.jpg --ocr_engine tesseract --language english
 ```
