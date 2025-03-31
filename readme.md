@@ -101,7 +101,7 @@ pip install -r requirements.txt
 
 ### Command Line - *deprecated*
 ```sh
-python main.py --image path/to/invoice.jpg --ocr_engine tesseract --language english
+ python main.py --image invoices/invoice1.png --engine tesseract --lang english
 ```
 ### Streamlit Interface
 
