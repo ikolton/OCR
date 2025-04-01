@@ -7,6 +7,7 @@ Invoice OCR Scanner is an automated system that extracts key information from in
 - [Invoice OCR Scanner](#invoice-ocr-scanner)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Tutorial Video](#tutorial-video)
   - [Architecture](#architecture)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
@@ -40,6 +41,9 @@ Invoice OCR Scanner is an automated system that extracts key information from in
   - ~~A CLI-based application for streamlined processing.~~  
   - An interactive Streamlit web interface for real-time invoice scanning.
   - Features include saving preprocessed images and scanned text to files on your local machine, extracting relevant dates and totals from invoices, and classifying document types.
+
+## Tutorial Video
+
 
 
 ## Architecture
