@@ -35,6 +35,7 @@ Invoice OCR Scanner is an automated system that extracts key information from in
 - **User Interfaces:**  
   - ~~A CLI-based application for streamlined processing.~~
   - An interactive Streamlit web interface for real-time invoice scanning.
+  - Available features in interface: saving preprocessed image and scanned text to files on your local machine, extracting issue and due dates, total sum of products.
 
 ## Architecture
 
@@ -101,7 +102,7 @@ pip install -r requirements.txt
 
 ### Command Line - *deprecated*
 ```sh
-python main.py --image path/to/invoice.jpg --ocr_engine tesseract --language english
+ python main.py --image invoices/invoice1.png --engine tesseract --lang english
 ```
 ### Streamlit Interface
 
