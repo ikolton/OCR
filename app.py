@@ -9,7 +9,6 @@ from PIL import Image as PILImage
 import io
 import re
 
-# Configure global logging so that all modules using logging will follow these settings.
 logging.basicConfig(
     level=logging.ERROR,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
