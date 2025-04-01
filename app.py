@@ -7,6 +7,8 @@ from config import LANGUAGE_MAP, AVAILABLE_STEPS, DEFAULT_PIPELINE
 import logging
 from PIL import Image as PILImage
 import io
+import re
+import pytesseract
 
 # Configure global logging so that all modules using logging will follow these settings.
 logging.basicConfig(
@@ -15,6 +17,37 @@ logging.basicConfig(
 )
 
 st.set_page_config(layout="wide")
+
+
+def extract_invoice_data(text):
+    """Extracts dates, place, and total sum from OCR text using regex patterns."""
+
+    # Regular Expression Patterns
+    date_pattern = r"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})"  # Matches dates like 12/03/2023, 2023-03-12
+    total_pattern = r"(Total\s*[:\s]*[\$€]?\s*([\d,]+\.\d{2}))"  # Matches 'Total: 123.45' or 'Total $123.45'
+
+    # Extracting values
+    date_matches = re.findall(date_pattern, text)
+    total_match = re.search(total_pattern, text)
+
+    invoice_date, due_date = "Not Found", "Not Found"
+    for date in date_matches:
+        if "invoice date" in text.lower():
+            invoice_date = date
+        elif "due date" in text.lower():
+            due_date = date
+
+    if len(date_matches) >= 2 and invoice_date == "Not Found":
+        invoice_date, due_date = date_matches[:2]
+
+    extracted_data = {
+        "Invoice Date": invoice_date,
+        "Due Date": due_date,
+        "Total Amount": total_match.group(2) if total_match else "Not Found"
+    }
+
+    return extracted_data
+
 
 # Set a default pipeline on start if not already defined.
 if 'pipeline_steps' not in st.session_state:
@@ -99,7 +132,7 @@ def main():
             st.image(image, channels="BGR", caption="Original Image")
 
             # Separate button for preprocessing.
-            if st.button("Preprocess Image"):
+            if st.button("Detect and preprocess image"):
                 try:
                     preprocessed_image = image_preprocessing.preprocess_image_custom(image, steps)
                     st.session_state.preprocessed_image = preprocessed_image
@@ -142,6 +175,11 @@ def main():
         if st.session_state.ocr_text is not None:
             st.subheader("Extracted Text")
             st.text_area("OCR Output", st.session_state.ocr_text, height=300)
+
+            invoice_data = extract_invoice_data(st.session_state.ocr_text)
+            st.write("### Extracted Invoice Data")
+            st.json(invoice_data)
+
             # Compute and display text statistics.
             text_stats = ocr_engine.get_text_stats(st.session_state.ocr_text)
             st.write("### Text Statistics")
