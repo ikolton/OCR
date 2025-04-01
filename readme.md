@@ -1,6 +1,6 @@
 # Invoice OCR Scanner
 
-Invoice OCR Scanner is an automated system that extracts key information from invoice images. By combining robust image preprocessing techniques with advanced Optical Character Recognition (OCR), this project converts scanned invoices into machine-readable text for easier data extraction and analysis.
+Invoice OCR Scanner is an automated system that extracts key information from invoice images. By combining robust image preprocessing techniques with advanced Optical Character Recognition (OCR), this project converts scanned invoices into machine-readable text for easier data extraction and analysis. Modular design allows for adjusting for different types of text documents.
 
 ## Table of Contents
 
@@ -13,29 +13,34 @@ Invoice OCR Scanner is an automated system that extracts key information from in
     - [Using Conda](#using-conda)
     - [Using pip](#using-pip)
   - [Usage](#usage)
-    - [Command Line](#command-line)
+    - [Command Line - *deprecated*](#command-line---deprecated)
     - [Streamlit Interface](#streamlit-interface)
-  - [Development](#development)
-  - [Future Enhancements](#future-enhancements)
   - [License](#license)
 
 ## Features
 
 - **Image Preprocessing:**  
   Enhance images with contrast adjustment, noise reduction, deskewing, sharpening, and cropping to focus on text regions.
-  
+
 - **Optical Character Recognition (OCR):**  
   Extract text using:
   - **Tesseract OCR:** A widely-used, open-source OCR engine.
   - **EasyOCR:** A deep learning-based OCR alternative that supports multiple languages.
-  
+
+- **Data Extraction:**  
+  Automatically extract key invoice details—including invoice date, due date, additional dates, and total amount—directly from the OCR output.
+
+- **Document Classification:**  
+  Classify documents based on their content, providing additional insights into the type of document scanned.
+
 - **Modular Design:**  
-  Structured into separate modules for preprocessing, OCR, (planned) data extraction, and (optional) document classification.
+  Structured into separate modules for preprocessing, OCR, data extraction, and document classification, enabling easy expansion and maintenance.
 
 - **User Interfaces:**  
-  - ~~A CLI-based application for streamlined processing.~~
+  - ~~A CLI-based application for streamlined processing.~~  
   - An interactive Streamlit web interface for real-time invoice scanning.
-  - Available features in interface: saving preprocessed image and scanned text to files on your local machine, extracting issue and due dates, total sum of products.
+  - Features include saving preprocessed images and scanned text to files on your local machine, extracting relevant dates and totals from invoices, and classifying document types.
+
 
 ## Architecture
 
@@ -53,13 +58,13 @@ invoice_scanner/
 ├── ocr/                     # OCR module.
 │   ├── __init__.py
 │   └── ocr_engine.py           # Integration with Tesseract and EasyOCR.
-├── extraction/              # (Planned) Data extraction module.
+├── extraction/              # Data extraction module.
 │   ├── __init__.py
 │   └── data_extractor.py       # Parsing OCR results to extract key invoice fields.
-├── classification/          # (Optional) Document classification module.
+├── classification/          #  Document classification module.
 │   ├── __init__.py
-│   └── invoice_classifier.py   # (Future) Classify invoice types and validate layouts.
-└── utils/                   # Utility functions and helpers.
+│   └── document_classifier.py   # Classify invoice types and others
+└── utils/                   # Utility functions and helpers. Currently none
     ├── __init__.py
     └── helper_functions.py     # Logging, error handling, etc.
 ```
@@ -112,17 +117,6 @@ streamlit run app.py
 
 Upload an invoice, tweak the pipeline, and extract text via OCR.
 
-## Development
-
-- Preprocessing in `preprocessing/image_preprocessing.py`
-- OCR logic in `ocr/ocr_engine.py`
-- Configurable pipeline and language map in `config.py`
-
-## Future Enhancements
-
-- Data field extraction (dates, totals, invoice numbers)
-- Document classification
-- Smarter Streamlit UI and PDF/CSV export
 
 ## License
 

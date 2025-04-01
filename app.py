@@ -7,7 +7,8 @@ from config import LANGUAGE_MAP, AVAILABLE_STEPS, DEFAULT_PIPELINE
 import logging
 from PIL import Image as PILImage
 import io
-import re
+from extraction import data_extractor
+from classification import document_classifier
 
 logging.basicConfig(
     level=logging.ERROR,
@@ -15,40 +16,6 @@ logging.basicConfig(
 )
 
 st.set_page_config(layout="wide")
-
-
-def extract_invoice_data(text):
-    """Extracts dates, place, and total sum from OCR text using regex patterns."""
-
-    # Regular Expression Patterns
-    date_pattern = r"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})"  # Matches dates like 12/03/2023, 2023-03-12
-    total_pattern = r"(Total\s*[:\s]*[\$€]?\s*([\d,]+\.\d{2}))"  # Matches 'Total: 123.45' or 'Total $123.45'
-
-    # Extracting values
-    date_matches = re.findall(date_pattern, text)
-    logging.info(f"Found dates: {date_matches}")
-
-    total_match = re.search(total_pattern, text)
-    logging.info(f"Found total: {total_match.group(1) if total_match else 'Not Found'}")
-
-
-    invoice_date, due_date = "Not Found", "Not Found"
-    for date in date_matches:
-        if "invoice date" in text.lower() and invoice_date == "Not Found":
-            invoice_date = date
-        elif "due date" in text.lower() and due_date == "Not Found":
-            due_date = date
-
-    date_matches = [date for date in date_matches if date != invoice_date and date != due_date]
-
-    extracted_data = {
-        "Invoice Date": invoice_date,
-        "Due Date": due_date,
-        "Unknown Dates": date_matches,
-        "Total Amount": total_match.group(2) if total_match else "Not Found"
-    }
-
-    return extracted_data
 
 
 # Set a default pipeline on start if not already defined.
@@ -178,7 +145,7 @@ def main():
             st.subheader("Extracted Text")
             st.text_area("OCR Output", st.session_state.ocr_text, height=300)
 
-            invoice_data = extract_invoice_data(st.session_state.ocr_text)
+            invoice_data = data_extractor.extract_invoice_data(st.session_state.ocr_text)
             st.write("### Extracted Invoice Data")
             st.json(invoice_data)
 
@@ -186,6 +153,11 @@ def main():
             text_stats = ocr_engine.get_text_stats(st.session_state.ocr_text)
             st.write("### Text Statistics")
             st.json(text_stats)
+
+            classification_result = document_classifier.classify_document(extracted_text)
+            st.write("### Document Classification")
+            st.json(classification_result)
+
 
             st.download_button(
                 label="Download OCR text",

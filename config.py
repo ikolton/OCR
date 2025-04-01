@@ -13,3 +13,5 @@ AVAILABLE_STEPS = [
 
 # Default pipeline order.
 DEFAULT_PIPELINE = ["contrast", "deskew", "orientation", "crop"]
+
+DOCUMENT_LABELS = {"invoice", "receipt", "contract", "report", "letter", "memo", "form", "other"}
