@@ -46,6 +46,10 @@ Invoice OCR Scanner is an automated system that extracts key information from in
 
 
 
+Uploading tutorial_video.mp4…
+
+
+
 ## Architecture
 
 The (planned) project structure is as follows:
