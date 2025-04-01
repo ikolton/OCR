@@ -8,7 +8,6 @@ import logging
 from PIL import Image as PILImage
 import io
 import re
-import pytesseract
 
 # Configure global logging so that all modules using logging will follow these settings.
 logging.basicConfig(
@@ -28,21 +27,25 @@ def extract_invoice_data(text):
 
     # Extracting values
     date_matches = re.findall(date_pattern, text)
+    logging.info(f"Found dates: {date_matches}")
+
     total_match = re.search(total_pattern, text)
+    logging.info(f"Found total: {total_match.group(1) if total_match else 'Not Found'}")
+
 
     invoice_date, due_date = "Not Found", "Not Found"
     for date in date_matches:
-        if "invoice date" in text.lower():
+        if "invoice date" in text.lower() and invoice_date == "Not Found":
             invoice_date = date
-        elif "due date" in text.lower():
+        elif "due date" in text.lower() and due_date == "Not Found":
             due_date = date
 
-    if len(date_matches) >= 2 and invoice_date == "Not Found":
-        invoice_date, due_date = date_matches[:2]
+    date_matches = [date for date in date_matches if date != invoice_date and date != due_date]
 
     extracted_data = {
         "Invoice Date": invoice_date,
         "Due Date": due_date,
+        "Unknown Dates": date_matches,
         "Total Amount": total_match.group(2) if total_match else "Not Found"
     }
 
@@ -116,7 +119,7 @@ def main():
     st.write("Upload an invoice image and configure your preprocessing pipeline.")
 
     uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg"])
-    ocr_engine_choice = st.selectbox("Choose OCR Engine", ["tesseract", "easyocr"])
+    ocr_engine_choice = st.selectbox("Choose OCR Engine", ["easyocr", "tesseract"])
     language_choice = st.selectbox("Choose Language", list(LANGUAGE_MAP.keys()))
 
     # Display the interactive ordering UI.

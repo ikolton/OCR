@@ -12,4 +12,4 @@ AVAILABLE_STEPS = [
 ]
 
 # Default pipeline order.
-DEFAULT_PIPELINE = ["contrast", "sharpen", "deskew", "orientation", "crop"]
+DEFAULT_PIPELINE = ["contrast", "deskew", "orientation", "crop"]
