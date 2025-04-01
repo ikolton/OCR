@@ -1,3 +1,5 @@
+
+https://github.com/user-attachments/assets/d3bff223-18ac-4288-8755-5a66aad0c0c4
 # Invoice OCR Scanner
 
 Invoice OCR Scanner is an automated system that extracts key information from invoice images. By combining robust image preprocessing techniques with advanced Optical Character Recognition (OCR), this project converts scanned invoices into machine-readable text for easier data extraction and analysis. Modular design allows for adjusting for different types of text documents.
@@ -44,11 +46,7 @@ Invoice OCR Scanner is an automated system that extracts key information from in
 
 ## Tutorial Video
 
-
-
-Uploading tutorial_video.mp4…
-
-
+https://github.com/user-attachments/assets/e32de478-91c7-46ce-9320-0f037cae77c2
 
 ## Architecture
 
