@@ -32,8 +32,8 @@ def classify_document(text):
     
     return formatted_result
 
-if __name__ == "__main__":
-    # Example usage with sample text.
-    sample_text = "Invoice Number: 123456\nDate: 2023-06-30\nVendor: ABC Supplies\nTotal: $450.00"
-    classification_result = classify_document(sample_text)
-    print("Classification Result:", classification_result)
+# if __name__ == "__main__":
+#     # Example usage with sample text.
+#     sample_text = "Invoice Number: 123456\nDate: 2023-06-30\nVendor: ABC Supplies\nTotal: $450.00"
+#     classification_result = classify_document(sample_text)
+#     print("Classification Result:", classification_result)
